@@ -1,5 +1,5 @@
 //The URLS are setup here
-const urlConstants = {
+export const urlConstants = {
   AUTH: {
     REGISTRATION: "/auth/create-account",
     LOGIN: "/auth/login",
