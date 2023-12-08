@@ -3,43 +3,53 @@ import { urlConstants } from "../../../config/constants";
 import { executeRequest } from "../../utils/axiosLib";
 import { HTTP_CODES, parseUrlWithQuery, response } from "../../utils/response";
 
-export const addReview = async ({
-  receiver,
-  collectionId,
-  review,
-  rating,
+export const createWithdrawals = async ({
+  amount,
+  coin,
+  address,
+  password,
+  otp,
 }: {
-  receiver: string;
-  collectionId: string;
-  review: string;
-  rating: number;
+  amount: number;
+  coin: string;
+  address: string;
+  password: string;
+  otp?: string;
 }) => {
   try {
-    const url = `${baseURL}/${urlConstants.REVIEWS.ADD}`;
+    const url = `${baseURL}/${urlConstants.WITHDRAWAL.CREATE}`;
 
     const payload = {
-      receiver,
-      collectionId,
-      review,
-      rating,
+      amount,
+      coin,
+      address,
+      password,
+      otp,
     };
 
     const resp = await executeRequest(url, "POST", payload, undefined);
-
     const { statusCode, message, data } = resp;
     return response(statusCode > 226, statusCode, message, data);
-  } catch (error: Error | unknown) {}
+  } catch (error: Error | unknown) {
+    console.log({ error });
+    return response(
+      true,
+      HTTP_CODES.INTERNAL_SERVER_ERROR,
+      String(error),
+      null
+    );
+  }
 };
 
-export const getAllReviews = async ({
+export const getWithdrawals = async ({
   page,
   limit,
 }: {
-  page?: number;
-  limit?: number;
+  page: string;
+  limit: string;
 }) => {
   try {
-    const url = parseUrlWithQuery(`${baseURL}${urlConstants.REVIEWS.ALL}`, {
+    const url = parseUrlWithQuery(`${baseURL}/${urlConstants.WITHDRAWAL.ALL}`, {
       page,
       limit,
     });

@@ -8,7 +8,7 @@ export const executeRequest = async (
   url: string,
   method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE",
   payload: {
-    [key: string]: string | Record<string, any> | number | boolean;
+    [key: string]: string | Record<string, any> | number | boolean | undefined;
   } = {},
   headers: { [key: string]: string } = {},
   reject_unauthorized = true
